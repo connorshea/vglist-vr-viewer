@@ -18,7 +18,10 @@ AFRAME.registerComponent('stupid-vglist-vr-viewer', {
   /**
    * Called once when component is attached. Generally for initial setup.
    */
-  init: function () { },
+  init: function () {
+    console.log('init');
+    console.log(VGLIST_API_TOKEN);
+  },
 
   /**
    * Called when component is attached and when component data changes.

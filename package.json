@@ -12,7 +12,8 @@
     "lint:fix": "semistandard --fix",
     "prepublish": "npm run dist",
     "ghpages": "ghpages",
-    "start": "webpack-dev-server --host 0.0.0.0 --progress --colors --hot-only --inline --port 5000",
+    "start": "webpack-dev-server --host 0.0.0.0 --progress --colors --port 5000",
+    "watch": "webpack --watch",
     "test": "karma start ./tests/karma.conf.js",
     "test:firefox": "karma start ./tests/karma.conf.js --browsers Firefox",
     "test:chrome": "karma start ./tests/karma.conf.js --browsers Chrome"
