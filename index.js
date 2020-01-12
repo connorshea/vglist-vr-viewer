@@ -24,22 +24,25 @@ AFRAME.registerComponent('stupid-vglist-vr-viewer', {
   init: async function() {
     let username = 'connor';
     let gamePurchases = await getGamePurchases(username);
-    console.log(gamePurchases['nodes']);
 
     let sceneEl = document.querySelector('a-scene');
     let assetsEl = document.createElement('a-assets');
 
     let xPosition = 0;
-    gamePurchases['nodes'].forEach(() => {
+    gamePurchases['nodes'].forEach((gamePurchase, i) => {
+      if (gamePurchase['game']['coverUrl'] === null) {
+        return;
+      }
+
       let img = document.createElement('img');
-      img.setAttribute('src', `${VGLIST_URL}${gamePurchases['nodes'][0]['game']['coverUrl']}`);
-      img.setAttribute('id', 'img1');
+      img.setAttribute('src', `${VGLIST_URL}${gamePurchase['game']['coverUrl']}`);
+      img.setAttribute('id', `img${i}`);
       img.setAttribute('crossorigin', 'anonymous');
       assetsEl.appendChild(img);
 
       let entityEl = document.createElement('a-box');
       // Do `.setAttribute()`s to initialize the entity.
-      entityEl.setAttribute('src', '#img1');
+      entityEl.setAttribute('src', `#img${i}`);
       entityEl.setAttribute('geometry', {
         primitive: 'box',
         height: 4,
