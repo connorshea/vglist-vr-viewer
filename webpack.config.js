@@ -20,7 +20,7 @@ module.exports = {
   output: {
     globalObject: 'this',
     path: __dirname + '/dist',
-    filename: process.env.NODE_ENV === 'production' ? 'stupid-vglist-vr-viewer.min.js' : 'stupid-vglist-vr-viewer.js',
+    filename: process.env.NODE_ENV === 'production' ? 'vglist-vr-viewer.min.js' : 'vglist-vr-viewer.js',
     libraryTarget: 'umd'
   },
   plugins: PLUGINS,

@@ -5,12 +5,14 @@
     <title>Stupid vglist VR Viewer</title>
     <meta name="description" content="A Stupid vglist VR Viewer."></meta>
     <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
-    <script src="../dist/stupid-vglist-vr-viewer.js"></script>
+    <script src="../dist/vglist-vr-viewer.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.0.0/dist/aframe-environment-component.min.js"></script>
   </head>
   <body>
     <a-scene environment="preset: default; groundColor: #fff; groundTexture: none;">
-      <a-entity stupid-vglist-vr-viewer=""></a-entity>
+      <a-entity vglist-vr-viewer=""></a-entity>
+      <a-entity oculus-touch-controls="hand: left"></a-entity>
+      <a-entity oculus-touch-controls="hand: right"></a-entity>
     </a-scene>
   </body>
 </html>

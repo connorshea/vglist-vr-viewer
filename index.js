@@ -10,7 +10,7 @@ const VGLIST_URL = "https://vglist.co";
 /**
  * Stupid vglist VR Viewer component for A-Frame.
  */
-AFRAME.registerComponent('stupid-vglist-vr-viewer', {
+AFRAME.registerComponent('vglist-vr-viewer', {
   schema: {},
 
   /**
