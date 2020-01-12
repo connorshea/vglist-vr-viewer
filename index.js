@@ -1,5 +1,5 @@
 /* global AFRAME */
-/* eslint-env node, es6 */
+
 if (typeof AFRAME === 'undefined') {
   throw new Error('Component attempted to register before AFRAME was available.');
 }
@@ -18,30 +18,24 @@ AFRAME.registerComponent('stupid-vglist-vr-viewer', {
   /**
    * Called once when component is attached. Generally for initial setup.
    */
-  init: function() {
-    const query = /* GraphQL */ `{
-      game(id: 1) {
-        name
-        id
-        wikidataId
-      }
-    }`;
+  init: async function() {
+    let username = 'connor';
+    let gamePurchases = await getGamePurchases(username);
+    console.log(gamePurchases['nodes']);
 
-    let token = VGLIST_API_TOKEN;
-    let endpoint = "http://localhost:3000/graphql";
+    let sceneEl = document.querySelector('a-scene');
+    let entityEl = document.createElement('a-entity');
 
-    fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        "User-Agent": "Stupid vglist VR Viewer",
-        "X-User-Email": "admin@example.com",
-        "X-User-Token": token,
-        'Content-Type': 'application/json',
-        "Accept": "*/*"
-      },
-      body: JSON.stringify({ query: query })
-    }).then(response => response.json())
-      .then(data => console.log(data));
+    // Do `.setAttribute()`s to initialize the entity.
+    entityEl.setAttribute('geometry', {
+      primitive: 'box',
+      height: 5,
+      width: 1
+    });
+    entityEl.setAttribute('position', { x: 1, y: 2, z: 3 });
+    console.log(entityEl);
+
+    sceneEl.appendChild(entityEl);
   },
 
   /**
@@ -80,3 +74,44 @@ AFRAME.registerComponent('stupid-vglist-vr-viewer', {
     // click: function (evt) { }
   }
 });
+
+async function getGamePurchases(username) {
+  const query = /* GraphQL */ `{
+    user(username: "${username}") {
+      gamePurchases {
+        nodes {
+          game {
+            name
+            coverUrl
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }`;
+
+  let email = VGLIST_USER_EMAIL;
+  let token = VGLIST_API_TOKEN;
+  let endpoint = "https://vglist.co/graphql";
+
+  let gamePurchases = [];
+
+  return await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      "User-Agent": "Stupid vglist VR Viewer",
+      "X-User-Email": email,
+      "X-User-Token": token,
+      'Content-Type': 'application/json',
+      "Accept": "*/*"
+    },
+    body: JSON.stringify({ query: query })
+  }).then(response => response.json())
+    .then(data => {
+      gamePurchases = data['data']['user']['gamePurchases'];
+      return gamePurchases;
+    });
+}
