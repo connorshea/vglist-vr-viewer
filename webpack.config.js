@@ -15,12 +15,16 @@ module.exports = {
   devServer: {
     disableHostCheck: true
   },
-  entry: './index.js',
+  entry: {
+    'vglist-vr-viewer': './index.js',
+    'environment': './environment.js',
+    'aframe': './aframe.js'
+  },
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   output: {
     globalObject: 'this',
     path: __dirname + '/dist',
-    filename: process.env.NODE_ENV === 'production' ? 'vglist-vr-viewer.min.js' : 'vglist-vr-viewer.js',
+    filename: process.env.NODE_ENV === 'production' ? '[name].min.js' : '[name].js',
     libraryTarget: 'umd'
   },
   plugins: PLUGINS,

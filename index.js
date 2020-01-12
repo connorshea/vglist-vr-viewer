@@ -63,7 +63,7 @@ AFRAME.registerComponent('vglist-vr-viewer', {
       sceneEl.appendChild(entityEl);
 
       let textEl = document.createElement('a-entity');
-      textEl.setAttribute('text', `color: black; width: 4; wrap-count: 15; align: center; side: double; value: ${gamePurchase['game']['name']}`);
+      textEl.setAttribute('text', `color: black; width: 3; wrap-count: 15; align: center; side: double; value: ${gamePurchase['game']['name']}`);
       textEl.setAttribute('position', { x: xPosition, y: 5, z: -4 });
       sceneEl.appendChild(textEl);
 
