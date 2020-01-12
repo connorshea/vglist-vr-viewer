@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "A stupid VR viewer for your vglist library.",
   "main": "index.js",
-  "unpkg": "dist/aframe-stupid-vglist-vr-viewer-component.min.js",
   "scripts": {
     "dist": "npm run dist:min && npm run dist:max",
     "dist:max": "webpack",
@@ -24,7 +23,7 @@
     "vr",
     "webvr",
     "webxr",
-    "stupid-vglist-vr-viewer"
+    "vglist-vr-viewer"
   ],
   "author": "Connor Shea <connor.james.shea@gmail.com>",
   "license": "MIT",
@@ -66,15 +65,5 @@
     "webpack-cli": "*",
     "webpack-dev-server": "^3.2.0",
     "webpack-sources": "1.0.1"
-  },
-  "semistandard": {
-    "globals": [
-      "AFRAME",
-      "THREE"
-    ],
-    "ignore": [
-      "examples/build.js",
-      "dist/**"
-    ]
   }
 }
