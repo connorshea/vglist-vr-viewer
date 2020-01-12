@@ -7,6 +7,13 @@ if (typeof AFRAME === 'undefined') {
 const VGLIST_URL = "https://vglist.co";
 // const VGLIST_URL = "http://localhost:3000";
 
+BOX_HEIGHT = 2.5;
+BOX_WIDTH = 1.5;
+BOX_DEPTH = 0.1;
+BOX_MARGIN = 0.3;
+BOX_HEIGHT_OFF_GROUND = 0.75;
+BOX_Z_POSITION = -4;
+
 /**
  * Stupid vglist VR Viewer component for A-Frame.
  */
@@ -30,7 +37,7 @@ AFRAME.registerComponent('vglist-vr-viewer', {
 
     let libraryTextEl = document.createElement('a-entity');
     libraryTextEl.setAttribute('text', `color: black; width: 5; wrap-count: 15; align: center; side: double; value: ${username}'s Library`);
-    libraryTextEl.setAttribute('position', { x: 0.5, y: 6, z: -4 });
+    libraryTextEl.setAttribute('position', { x: 0.5, y: BOX_HEIGHT + 2, z: BOX_Z_POSITION });
     sceneEl.appendChild(libraryTextEl);
 
     let xPosition = -10;
@@ -54,30 +61,30 @@ AFRAME.registerComponent('vglist-vr-viewer', {
       entityEl.setAttribute('src', `#img${i}`);
       entityEl.setAttribute('geometry', {
         primitive: 'box',
-        height: 4,
-        width: 3,
-        depth: 0.25
+        height: BOX_HEIGHT,
+        width: BOX_WIDTH,
+        depth: BOX_DEPTH
       });
-      entityEl.setAttribute('position', { x: xPosition, y: 2.5, z: -4 });
+      entityEl.setAttribute('position', { x: xPosition, y: BOX_HEIGHT / 2 + 0.25, z: BOX_Z_POSITION });
       sceneEl.appendChild(entityEl);
 
       // Create a fake shadow below each box, much simpler than messing with lighting stuff.
       let fakeShadow = document.createElement('a-plane');
-      fakeShadow.setAttribute('position', { x: xPosition, y: 0.01, z: -4 });
+      fakeShadow.setAttribute('position', { x: xPosition, y: 0.01, z: BOX_Z_POSITION });
       fakeShadow.setAttribute('rotation', '-90 0 0');
-      fakeShadow.setAttribute('width', '3');
-      fakeShadow.setAttribute('height', '0.25');
+      fakeShadow.setAttribute('width', BOX_WIDTH);
+      fakeShadow.setAttribute('height', BOX_DEPTH);
       fakeShadow.setAttribute('color', '#000');
       fakeShadow.setAttribute('opacity', 0.25);
       sceneEl.appendChild(fakeShadow);
 
       let textEl = document.createElement('a-entity');
-      textEl.setAttribute('text', `color: black; width: 3; wrap-count: 15; align: center; side: double; value: ${gamePurchase['game']['name']}`);
-      textEl.setAttribute('position', { x: xPosition, y: 5, z: -4 });
+      textEl.setAttribute('text', `color: black; width: ${BOX_WIDTH}; wrap-count: 15; align: center; side: double; value: ${gamePurchase['game']['name']}`);
+      textEl.setAttribute('position', { x: xPosition, y: BOX_HEIGHT + 0.75, z: BOX_Z_POSITION });
       textEl.setAttribute('baseline', 'bottom');
       sceneEl.appendChild(textEl);
 
-      xPosition += 3.5;
+      xPosition += BOX_WIDTH + BOX_MARGIN;
     });
 
     sceneEl.appendChild(assetsEl);
