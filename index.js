@@ -4,6 +4,9 @@ if (typeof AFRAME === 'undefined') {
   throw new Error('Component attempted to register before AFRAME was available.');
 }
 
+const VGLIST_URL = "https://vglist.co";
+// const VGLIST_URL = "http://localhost:3000";
+
 /**
  * Stupid vglist VR Viewer component for A-Frame.
  */
@@ -24,28 +27,31 @@ AFRAME.registerComponent('stupid-vglist-vr-viewer', {
     console.log(gamePurchases['nodes']);
 
     let sceneEl = document.querySelector('a-scene');
-    let entityEl = document.createElement('a-entity');
     let assetsEl = document.createElement('a-assets');
 
-    let img = document.createElement('img');
-    img.setAttribute('src', `https://vglist.co${gamePurchases['nodes'][0]['game']['coverUrl']}`);
-    img.setAttribute('id', 'img1');
-    img.setAttribute('crossorigin', 'anonymous');
-    assetsEl.appendChild(img);
+    let xPosition = 0;
+    gamePurchases['nodes'].forEach(() => {
+      let img = document.createElement('img');
+      img.setAttribute('src', `${VGLIST_URL}${gamePurchases['nodes'][0]['game']['coverUrl']}`);
+      img.setAttribute('id', 'img1');
+      img.setAttribute('crossorigin', 'anonymous');
+      assetsEl.appendChild(img);
 
-    // Do `.setAttribute()`s to initialize the entity.
-    entityEl.setAttribute('geometry', {
-      primitive: 'box',
-      height: 4,
-      width: 3,
-      depth: 0.25
+      let entityEl = document.createElement('a-box');
+      // Do `.setAttribute()`s to initialize the entity.
+      entityEl.setAttribute('src', '#img1');
+      entityEl.setAttribute('geometry', {
+        primitive: 'box',
+        height: 4,
+        width: 3,
+        depth: 0.25
+      });
+      entityEl.setAttribute('position', { x: xPosition, y: 2, z: -4 });
+      sceneEl.appendChild(entityEl);
+      xPosition += 3.5;
     });
-    entityEl.setAttribute('position', { x: 0, y: 2, z: -4 });
-    entityEl.setAttribute('material', { color: 'red' });
-    entityEl.setAttribute('src', 'img1');
 
     sceneEl.appendChild(assetsEl);
-    sceneEl.appendChild(entityEl);
   },
 
   /**
@@ -105,7 +111,7 @@ async function getGamePurchases(username) {
 
   let email = VGLIST_USER_EMAIL;
   let token = VGLIST_API_TOKEN;
-  let endpoint = "https://vglist.co/graphql";
+  let endpoint = `${VGLIST_URL}/graphql`;
 
   let gamePurchases = [];
 
