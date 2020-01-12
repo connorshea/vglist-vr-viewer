@@ -25,16 +25,26 @@ AFRAME.registerComponent('stupid-vglist-vr-viewer', {
 
     let sceneEl = document.querySelector('a-scene');
     let entityEl = document.createElement('a-entity');
+    let assetsEl = document.createElement('a-assets');
+
+    let img = document.createElement('img');
+    img.setAttribute('src', `https://vglist.co${gamePurchases['nodes'][0]['game']['coverUrl']}`);
+    img.setAttribute('id', 'img1');
+    img.setAttribute('crossorigin', 'anonymous');
+    assetsEl.appendChild(img);
 
     // Do `.setAttribute()`s to initialize the entity.
     entityEl.setAttribute('geometry', {
       primitive: 'box',
-      height: 5,
-      width: 1
+      height: 4,
+      width: 3,
+      depth: 0.25
     });
-    entityEl.setAttribute('position', { x: 1, y: 2, z: 3 });
-    console.log(entityEl);
+    entityEl.setAttribute('position', { x: 0, y: 2, z: -4 });
+    entityEl.setAttribute('material', { color: 'red' });
+    entityEl.setAttribute('src', 'img1');
 
+    sceneEl.appendChild(assetsEl);
     sceneEl.appendChild(entityEl);
   },
 
