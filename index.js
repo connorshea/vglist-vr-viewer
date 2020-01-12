@@ -30,10 +30,10 @@ AFRAME.registerComponent('vglist-vr-viewer', {
 
     let libraryTextEl = document.createElement('a-entity');
     libraryTextEl.setAttribute('text', `color: black; width: 5; wrap-count: 15; align: center; side: double; value: ${username}'s Library`);
-    libraryTextEl.setAttribute('position', { x: 0.5, y: 5.5, z: -4 });
+    libraryTextEl.setAttribute('position', { x: 0.5, y: 6, z: -4 });
     sceneEl.appendChild(libraryTextEl);
 
-    let xPosition = 0;
+    let xPosition = -10;
     gamePurchases['nodes'].forEach((gamePurchase, i) => {
       if (gamePurchase['game']['coverUrl'] === null) {
         return;
@@ -58,12 +58,13 @@ AFRAME.registerComponent('vglist-vr-viewer', {
         width: 3,
         depth: 0.25
       });
-      entityEl.setAttribute('position', { x: xPosition, y: 2, z: -4 });
+      entityEl.setAttribute('position', { x: xPosition, y: 2.5, z: -4 });
+      entityEl.setAttribute('shadow', 'cast: true');
       sceneEl.appendChild(entityEl);
 
       let textEl = document.createElement('a-entity');
       textEl.setAttribute('text', `color: black; width: 4; wrap-count: 15; align: center; side: double; value: ${gamePurchase['game']['name']}`);
-      textEl.setAttribute('position', { x: xPosition, y: 4.5, z: -4 });
+      textEl.setAttribute('position', { x: xPosition, y: 5, z: -4 });
       sceneEl.appendChild(textEl);
 
       xPosition += 3.5;
