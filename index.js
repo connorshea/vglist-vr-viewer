@@ -33,6 +33,10 @@ AFRAME.registerComponent('stupid-vglist-vr-viewer', {
       if (gamePurchase['game']['coverUrl'] === null) {
         return;
       }
+      // TODO: Remove this limitation.
+      if (i > 10) {
+        return;
+      }
 
       let img = document.createElement('img');
       img.setAttribute('src', `${VGLIST_URL}${gamePurchase['game']['coverUrl']}`);
@@ -50,7 +54,13 @@ AFRAME.registerComponent('stupid-vglist-vr-viewer', {
         depth: 0.25
       });
       entityEl.setAttribute('position', { x: xPosition, y: 2, z: -4 });
+
+      let textEl = document.createElement('a-entity');
+      textEl.setAttribute('text', `color: black; width: 3; wrap-count: 15; align: center; side: double; value: ${gamePurchase['game']['name']}`);
+      textEl.setAttribute('position', { x: xPosition, y: 4.5, z: -4 });
+
       sceneEl.appendChild(entityEl);
+      sceneEl.appendChild(textEl);
       xPosition += 3.5;
     });
 
