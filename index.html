@@ -7,7 +7,6 @@
     <script src="../dist/aframe.js"></script>
     <script src="../dist/vglist-vr-viewer.js"></script>
     <script src="../dist/environment.js"></script>
-    <script src="../dist/super-hands.js"></script>
   </head>
   <body>
     <a-scene environment="preset: default; groundColor: #fff; groundTexture: none;">
@@ -20,8 +19,7 @@
         </a-mixin>
         <a-mixin id="controller-right" mixin="pointer"
                 vive-controls="hand: right" oculus-touch-controls="hand: right"
-                windows-motion-controls="hand: right"
-                gearvr-controls daydream-controls oculus-go-controls>
+                windows-motion-controls="hand: right">
         </a-mixin>
         <a-mixin id="controller-left" mixin="pointer"
                 vive-controls="hand: left" oculus-touch-controls="hand: left"

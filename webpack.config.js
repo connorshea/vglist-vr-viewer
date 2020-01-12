@@ -18,7 +18,6 @@ module.exports = {
   entry: {
     'vglist-vr-viewer': './index.js',
     'environment': './environment.js',
-    'super-hands': './super-hands.js',
     'aframe': './aframe.js'
   },
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
