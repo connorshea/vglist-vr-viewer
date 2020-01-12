@@ -59,12 +59,22 @@ AFRAME.registerComponent('vglist-vr-viewer', {
         depth: 0.25
       });
       entityEl.setAttribute('position', { x: xPosition, y: 2.5, z: -4 });
-      entityEl.setAttribute('shadow', 'cast: true');
       sceneEl.appendChild(entityEl);
+
+      // Create a fake shadow below each box, much simpler than messing with lighting stuff.
+      let fakeShadow = document.createElement('a-plane');
+      fakeShadow.setAttribute('position', { x: xPosition, y: 0.01, z: -4 });
+      fakeShadow.setAttribute('rotation', '-90 0 0');
+      fakeShadow.setAttribute('width', '3');
+      fakeShadow.setAttribute('height', '0.25');
+      fakeShadow.setAttribute('color', '#000');
+      fakeShadow.setAttribute('opacity', 0.25);
+      sceneEl.appendChild(fakeShadow);
 
       let textEl = document.createElement('a-entity');
       textEl.setAttribute('text', `color: black; width: 3; wrap-count: 15; align: center; side: double; value: ${gamePurchase['game']['name']}`);
       textEl.setAttribute('position', { x: xPosition, y: 5, z: -4 });
+      textEl.setAttribute('baseline', 'bottom');
       sceneEl.appendChild(textEl);
 
       xPosition += 3.5;
