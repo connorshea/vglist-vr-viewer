@@ -28,6 +28,11 @@ AFRAME.registerComponent('stupid-vglist-vr-viewer', {
     let sceneEl = document.querySelector('a-scene');
     let assetsEl = document.createElement('a-assets');
 
+    let libraryTextEl = document.createElement('a-entity');
+    libraryTextEl.setAttribute('text', `color: black; width: 5; wrap-count: 15; align: center; side: double; value: ${username}'s Library`);
+    libraryTextEl.setAttribute('position', { x: 0.5, y: 5.5, z: -4 });
+    sceneEl.appendChild(libraryTextEl);
+
     let xPosition = 0;
     gamePurchases['nodes'].forEach((gamePurchase, i) => {
       if (gamePurchase['game']['coverUrl'] === null) {
@@ -54,13 +59,13 @@ AFRAME.registerComponent('stupid-vglist-vr-viewer', {
         depth: 0.25
       });
       entityEl.setAttribute('position', { x: xPosition, y: 2, z: -4 });
+      sceneEl.appendChild(entityEl);
 
       let textEl = document.createElement('a-entity');
-      textEl.setAttribute('text', `color: black; width: 3; wrap-count: 15; align: center; side: double; value: ${gamePurchase['game']['name']}`);
+      textEl.setAttribute('text', `color: black; width: 4; wrap-count: 15; align: center; side: double; value: ${gamePurchase['game']['name']}`);
       textEl.setAttribute('position', { x: xPosition, y: 4.5, z: -4 });
-
-      sceneEl.appendChild(entityEl);
       sceneEl.appendChild(textEl);
+
       xPosition += 3.5;
     });
 
