@@ -79,9 +79,8 @@ AFRAME.registerComponent('vglist-vr-viewer', {
       sceneEl.appendChild(fakeShadow);
 
       let textEl = document.createElement('a-entity');
-      textEl.setAttribute('text', `color: black; width: ${BOX_WIDTH}; wrap-count: 15; align: center; side: double; value: ${gamePurchase['game']['name']}`);
-      textEl.setAttribute('position', { x: xPosition, y: BOX_HEIGHT + 0.75, z: BOX_Z_POSITION });
-      textEl.setAttribute('baseline', 'bottom');
+      textEl.setAttribute('text', `color: black; width: ${BOX_WIDTH}; wrap-count: 15; baseline: bottom; align: center; side: double; value: ${gamePurchase['game']['name']}`);
+      textEl.setAttribute('position', { x: xPosition, y: BOX_HEIGHT + 0.5, z: BOX_Z_POSITION });
       sceneEl.appendChild(textEl);
 
       xPosition += BOX_WIDTH + BOX_MARGIN;
