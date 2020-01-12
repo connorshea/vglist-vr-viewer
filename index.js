@@ -1,5 +1,5 @@
 /* global AFRAME */
-
+/* eslint-env node, es6 */
 if (typeof AFRAME === 'undefined') {
   throw new Error('Component attempted to register before AFRAME was available.');
 }
@@ -18,9 +18,30 @@ AFRAME.registerComponent('stupid-vglist-vr-viewer', {
   /**
    * Called once when component is attached. Generally for initial setup.
    */
-  init: function () {
-    console.log('init');
-    console.log(VGLIST_API_TOKEN);
+  init: function() {
+    const query = /* GraphQL */ `{
+      game(id: 1) {
+        name
+        id
+        wikidataId
+      }
+    }`;
+
+    let token = VGLIST_API_TOKEN;
+    let endpoint = "http://localhost:3000/graphql";
+
+    fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        "User-Agent": "Stupid vglist VR Viewer",
+        "X-User-Email": "admin@example.com",
+        "X-User-Token": token,
+        'Content-Type': 'application/json',
+        "Accept": "*/*"
+      },
+      body: JSON.stringify({ query: query })
+    }).then(response => response.json())
+      .then(data => console.log(data));
   },
 
   /**
