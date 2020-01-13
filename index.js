@@ -146,11 +146,14 @@ async function getGamePurchases(username) {
     }
   }`;
 
+  result = await graphqlQuery(query);
+  return result['data']['user']['gamePurchases'];
+}
+
+async function graphqlQuery(query) {
   let email = VGLIST_USER_EMAIL;
   let token = VGLIST_API_TOKEN;
   let endpoint = `${VGLIST_URL}/graphql`;
-
-  let gamePurchases = [];
 
   return await fetch(endpoint, {
     method: 'POST',
@@ -164,7 +167,6 @@ async function getGamePurchases(username) {
     body: JSON.stringify({ query: query })
   }).then(response => response.json())
     .then(data => {
-      gamePurchases = data['data']['user']['gamePurchases'];
-      return gamePurchases;
+      return data;
     });
 }
