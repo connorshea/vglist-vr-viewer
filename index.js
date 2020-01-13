@@ -14,7 +14,15 @@ GAME_BOX = {
   margin: 0.3,
   height_off_ground: 0.75,
   z_position: -4
-}
+};
+
+AVATAR_BOX = {
+  height: 1.5,
+  width: 1.5,
+  depth: 0.1,
+  margin: 0.2,
+  z_position: 4
+};
 
 /**
  * Stupid vglist VR Viewer component for A-Frame.
@@ -43,24 +51,34 @@ AFRAME.registerComponent('vglist-vr-viewer', {
     sceneEl.appendChild(libraryTextEl);
 
     let xPosition = -10;
+
+    // Create no-cover asset so it can be reused.
+    let noCoverImg = document.createElement('img');
+    noCoverImg.setAttribute('src', `./no-cover.png`);
+    noCoverImg.setAttribute('id', 'noCover');
+    assetsEl.appendChild(noCoverImg);
+
     gamePurchases['nodes'].forEach((gamePurchase, i) => {
+      let img = document.createElement('img');
+      let assetName = '';
       if (gamePurchase['game']['coverUrl'] === null) {
-        return;
+        assetName = 'noCover';
+      } else {
+        img.setAttribute('src', `${VGLIST_URL}${gamePurchase['game']['coverUrl']}`);
+        img.setAttribute('crossorigin', 'anonymous');
+        assetName = `img${i}`;
+        img.setAttribute('id', assetName);
+        assetsEl.appendChild(img);
       }
+
       // TODO: Remove this limitation.
       if (i > 10) {
         return;
       }
 
-      let img = document.createElement('img');
-      img.setAttribute('src', `${VGLIST_URL}${gamePurchase['game']['coverUrl']}`);
-      img.setAttribute('id', `img${i}`);
-      img.setAttribute('crossorigin', 'anonymous');
-      assetsEl.appendChild(img);
-
       let entityEl = document.createElement('a-box');
       // Do `.setAttribute()`s to initialize the entity.
-      entityEl.setAttribute('src', `#img${i}`);
+      entityEl.setAttribute('src', `#${assetName}`);
       entityEl.setAttribute('geometry', {
         primitive: 'box',
         height: GAME_BOX.height,
@@ -87,8 +105,10 @@ AFRAME.registerComponent('vglist-vr-viewer', {
 
       xPosition += GAME_BOX.width + GAME_BOX.margin;
     });
-
     sceneEl.appendChild(assetsEl);
+
+    let users = await getUsers();
+    this.createAvatars(users);
   },
 
   /**
@@ -125,6 +145,49 @@ AFRAME.registerComponent('vglist-vr-viewer', {
    */
   events: {
     // click: function (evt) { }
+  },
+
+  createAvatars(users) {
+    let sceneEl = document.querySelector('a-scene');
+    let assetsEl = document.createElement('a-assets');
+
+    // Create default-avatar asset so it can be reused.
+    let defaultAvatarImg = document.createElement('img');
+    defaultAvatarImg.setAttribute('src', `./default-avatar.png`);
+    defaultAvatarImg.setAttribute('id', 'defaultAvatar');
+    assetsEl.appendChild(defaultAvatarImg);
+
+    let avatarXPosition = -10;
+
+    users['nodes'].forEach((user, i) => {
+      let img = document.createElement('img');
+      let assetName = '';
+      if (user['avatarUrl'] === null) {
+        assetName = 'defaultAvatar';
+      } else {
+        img.setAttribute('src', `${VGLIST_URL}${user['avatarUrl']}`);
+        img.setAttribute('crossorigin', 'anonymous');
+        assetName = `userImg${i}`;
+        img.setAttribute('id', assetName);
+        assetsEl.appendChild(img);
+      }
+
+      let userEl = document.createElement('a-box');
+      // Do `.setAttribute()`s to initialize the entity.
+      userEl.setAttribute('src', `#${assetName}`);
+      userEl.setAttribute('geometry', {
+        primitive: 'box',
+        height: AVATAR_BOX.height,
+        width: AVATAR_BOX.width,
+        depth: AVATAR_BOX.depth
+      });
+      userEl.setAttribute('position', { x: avatarXPosition, y: AVATAR_BOX.height / 2 + 0.25, z: AVATAR_BOX.z_position });
+
+      avatarXPosition += AVATAR_BOX.width + AVATAR_BOX.margin;
+      sceneEl.appendChild(userEl);
+    });
+
+    sceneEl.appendChild(assetsEl);
   }
 });
 
@@ -148,6 +211,24 @@ async function getGamePurchases(username) {
 
   result = await graphqlQuery(query);
   return result['data']['user']['gamePurchases'];
+}
+
+async function getUsers() {
+  const query = /* GraphQL */ `{
+    users {
+      nodes {
+        username
+        avatarUrl
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }`;
+
+  result = await graphqlQuery(query);
+  return result['data']['users'];
 }
 
 async function graphqlQuery(query) {
