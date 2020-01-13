@@ -157,34 +157,54 @@ AFRAME.registerComponent('vglist-vr-viewer', {
     defaultAvatarImg.setAttribute('id', 'defaultAvatar');
     assetsEl.appendChild(defaultAvatarImg);
 
-    let avatarXPosition = -10;
+    let userChunks = Utils.chunk(users['nodes'], 6);
 
-    users['nodes'].forEach((user, i) => {
-      let img = document.createElement('img');
-      let assetName = '';
-      if (user['avatarUrl'] === null) {
-        assetName = 'defaultAvatar';
-      } else {
-        img.setAttribute('src', `${VGLIST_URL}${user['avatarUrl']}`);
-        img.setAttribute('crossorigin', 'anonymous');
-        assetName = `userImg${i}`;
-        img.setAttribute('id', assetName);
-        assetsEl.appendChild(img);
-      }
+    let avatarYRow = 0;
+    userChunks.forEach((userChunk, i) => {
+      let avatarXPosition = -10;
 
-      let userEl = document.createElement('a-box');
-      // Do `.setAttribute()`s to initialize the entity.
-      userEl.setAttribute('src', `#${assetName}`);
-      userEl.setAttribute('geometry', {
-        primitive: 'box',
-        height: AVATAR_BOX.height,
-        width: AVATAR_BOX.width,
-        depth: AVATAR_BOX.depth
+      userChunk.forEach((user, j) => {
+        let img = document.createElement('img');
+        let assetName = '';
+        if (user['avatarUrl'] === null) {
+          assetName = 'defaultAvatar';
+        } else {
+          img.setAttribute('src', `${VGLIST_URL}${user['avatarUrl']}`);
+          img.setAttribute('crossorigin', 'anonymous');
+          assetName = `userImg${i}${j}`;
+          img.setAttribute('id', assetName);
+          assetsEl.appendChild(img);
+        }
+
+        let userEl = document.createElement('a-box');
+        // Do `.setAttribute()`s to initialize the entity.
+        userEl.setAttribute('src', `#${assetName}`);
+        userEl.setAttribute('geometry', {
+          primitive: 'box',
+          height: AVATAR_BOX.height,
+          width: AVATAR_BOX.width,
+          depth: AVATAR_BOX.depth
+        });
+        userEl.setAttribute('position', {
+          x: avatarXPosition,
+          y: (avatarYRow * (AVATAR_BOX.height + 0.3)) + AVATAR_BOX.height / 2 + 0.25,
+          z: AVATAR_BOX.z_position
+        });
+        sceneEl.appendChild(userEl);
+
+        let textEl = document.createElement('a-entity');
+        textEl.setAttribute('text', `color: black; width: ${AVATAR_BOX.width}; wrap-count: 15; baseline: bottom; align: center; side: double; value: ${user['username']}`);
+        textEl.setAttribute('position', {
+          x: avatarXPosition,
+          y: (avatarYRow * (AVATAR_BOX.height + 0.3)) + AVATAR_BOX.height + 0.3,
+          z: AVATAR_BOX.z_position
+        });
+        textEl.setAttribute('rotation', { x: 0, y: 180, z: 0 });
+        sceneEl.appendChild(textEl);
+
+        avatarXPosition += AVATAR_BOX.width + AVATAR_BOX.margin;
       });
-      userEl.setAttribute('position', { x: avatarXPosition, y: AVATAR_BOX.height / 2 + 0.25, z: AVATAR_BOX.z_position });
-
-      avatarXPosition += AVATAR_BOX.width + AVATAR_BOX.margin;
-      sceneEl.appendChild(userEl);
+      avatarYRow += 1;
     });
 
     sceneEl.appendChild(assetsEl);
@@ -250,4 +270,23 @@ async function graphqlQuery(query) {
     .then(data => {
       return data;
     });
+}
+
+class Utils {
+  /**
+   * Breaks an array up into chunks of a specific size.
+   *
+   * @param {array} array The array to chunk.
+   * @param {number} size The length of each chunk.
+   * @return {array[]} An array of arrays, each up to size in length.
+   */
+  static chunk(array, size) {
+    const chunked_arr = [];
+    let index = 0;
+    while (index < array.length) {
+      chunked_arr.push(array.slice(index, size + index));
+      index += size;
+    }
+    return chunked_arr;
+  }
 }
