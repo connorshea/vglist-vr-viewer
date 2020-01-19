@@ -11,12 +11,7 @@
   <body>
     <a-scene environment="preset: default; groundColor: #fff; groundTexture: none;">
       <a-assets>
-        <a-mixin id="pointer" raycaster="showLine: true; objects: .cube, a-link"
-                  super-hands="colliderEvent: raycaster-intersection;
-                              colliderEventProperty: els;
-                              colliderEndEvent: raycaster-intersection-cleared;
-                              colliderEndEventProperty: clearedEls;">
-        </a-mixin>
+        <a-mixin id="pointer" raycaster="showLine: true; objects: .clickable"></a-mixin>
         <a-mixin id="controller-right" mixin="pointer"
                 vive-controls="hand: right" oculus-touch-controls="hand: right"
                 windows-motion-controls="hand: right">
