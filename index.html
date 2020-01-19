@@ -10,22 +10,9 @@
   </head>
   <body>
     <a-scene environment="preset: default; groundColor: #fff; groundTexture: none;">
-      <a-assets>
-        <a-mixin id="pointer" raycaster="showLine: true; objects: .clickable"></a-mixin>
-        <a-mixin id="controller-right" mixin="pointer"
-                vive-controls="hand: right" oculus-touch-controls="hand: right"
-                windows-motion-controls="hand: right">
-        </a-mixin>
-        <a-mixin id="controller-left" mixin="pointer"
-                vive-controls="hand: left" oculus-touch-controls="hand: left"
-                windows-motion-controls="hand: left">
-        </a-mixin>
-      </a-assets>
       <a-entity vglist-vr-viewer=""></a-entity>
-      <a-entity>
-        <a-entity id="rhand" mixin="controller-right"></a-entity>
-        <a-entity id="lhand" mixin="controller-left"></a-entity>
-      </a-entity>
+      <a-entity laser-controls="hand: left" raycaster="showLine: true; objects: .clickable"></a-entity>
+      <a-entity laser-controls="hand: right" raycaster="showLine: true; objects: .clickable"></a-entity>
     </a-scene>
   </body>
 </html>

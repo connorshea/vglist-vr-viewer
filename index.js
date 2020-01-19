@@ -79,6 +79,7 @@ AFRAME.registerComponent('vglist-vr-viewer', {
       let entityEl = document.createElement('a-box');
       // Do `.setAttribute()`s to initialize the entity.
       entityEl.setAttribute('src', `#${assetName}`);
+      entityEl.classList.add('clickable');
       entityEl.setAttribute('geometry', {
         primitive: 'box',
         height: GAME_BOX.height,
@@ -109,6 +110,14 @@ AFRAME.registerComponent('vglist-vr-viewer', {
 
     let users = await getUsers();
     this.createAvatars(users);
+
+    let clickableEls = document.querySelectorAll('.clickable');
+    clickableEls.forEach((clickableEl) => {
+      console.log(clickableEl);
+      clickableEl.addEventListener('click', event => {
+        console.log(event);
+      })
+    });
   },
 
   /**
@@ -190,6 +199,7 @@ AFRAME.registerComponent('vglist-vr-viewer', {
           y: (avatarYRow * (AVATAR_BOX.height + 0.3)) + AVATAR_BOX.height / 2 + 0.25,
           z: AVATAR_BOX.z_position
         });
+        userEl.classList.add('clickable');
         sceneEl.appendChild(userEl);
 
         let textEl = document.createElement('a-entity');
