@@ -76,33 +76,9 @@ AFRAME.registerComponent('vglist-vr-viewer', {
         return;
       }
 
-      let entityEl = document.createElement('a-box');
-      // Do `.setAttribute()`s to initialize the entity.
-      entityEl.setAttribute('src', `#${assetName}`);
-      entityEl.classList.add('clickable');
-      entityEl.setAttribute('geometry', {
-        primitive: 'box',
-        height: GAME_BOX.height,
-        width: GAME_BOX.width,
-        depth: GAME_BOX.depth
-      });
-      entityEl.setAttribute('position', { x: xPosition, y: GAME_BOX.height / 2 + 0.25, z: GAME_BOX.z_position });
-      sceneEl.appendChild(entityEl);
-
-      // Create a fake shadow below each box, much simpler than messing with lighting stuff.
-      let fakeShadow = document.createElement('a-plane');
-      fakeShadow.setAttribute('position', { x: xPosition, y: 0.01, z: GAME_BOX.z_position });
-      fakeShadow.setAttribute('rotation', '-90 0 0');
-      fakeShadow.setAttribute('width', GAME_BOX.width);
-      fakeShadow.setAttribute('height', GAME_BOX.depth);
-      fakeShadow.setAttribute('color', '#000');
-      fakeShadow.setAttribute('opacity', 0.25);
-      sceneEl.appendChild(fakeShadow);
-
-      let textEl = document.createElement('a-entity');
-      textEl.setAttribute('text', `color: black; width: ${GAME_BOX.width}; wrap-count: 15; baseline: bottom; align: center; side: double; value: ${gamePurchase['game']['name']}`);
-      textEl.setAttribute('position', { x: xPosition, y: GAME_BOX.height + 0.5, z: GAME_BOX.z_position });
-      sceneEl.appendChild(textEl);
+      let gameBox = document.createElement('a-entity');
+      gameBox.setAttribute('game-box', `gameName: ${gamePurchase['game']['name']}; gameCoverId: ${assetName}; xPosition: ${xPosition}`);
+      sceneEl.appendChild(gameBox);
 
       xPosition += GAME_BOX.width + GAME_BOX.margin;
     });
@@ -110,14 +86,6 @@ AFRAME.registerComponent('vglist-vr-viewer', {
 
     let users = await getUsers();
     this.createAvatars(users);
-
-    let clickableEls = document.querySelectorAll('.clickable');
-    clickableEls.forEach((clickableEl) => {
-      console.log(clickableEl);
-      clickableEl.addEventListener('click', event => {
-        console.log(event);
-      })
-    });
   },
 
   /**
