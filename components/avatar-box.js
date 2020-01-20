@@ -26,8 +26,8 @@ AFRAME.registerComponent('avatar-box', {
    * Called once when component is attached. Generally for initial setup.
    */
   init: function() {
-    this.el.setAttribute('data-username', this.data.username);
     let boxEl = document.createElement('a-box');
+    boxEl.setAttribute('data-username', this.data.username);
 
     boxEl.setAttribute('src', `#${this.data.avatarId}`);
     boxEl.setAttribute('geometry', {
@@ -94,6 +94,8 @@ AFRAME.registerComponent('avatar-box', {
   events: {
     // When clicking a user, it'll load their library and remove the user list selection screen.
     click: function (event) {
+      console.log(event);
+      console.log(event.target);
       let username = event.target.dataset.username;
       let sceneEl = document.querySelector('a-scene');
 
