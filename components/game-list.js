@@ -34,6 +34,8 @@ AFRAME.registerComponent('game-list', {
     libraryTextEl.setAttribute('position', { x: 0.5, y: GAME_BOX.height + 2, z: GAME_BOX.z_position });
     this.el.appendChild(libraryTextEl);
 
+    this.createBackButton();
+
     if (gamePurchases['nodes'].length === 0) {
       let noGamesTextEl = document.createElement('a-entity');
       noGamesTextEl.setAttribute('text', `color: black; width: 10; wrap-count: 30; align: center; side: double; value: This user has no games.`);
@@ -76,7 +78,6 @@ AFRAME.registerComponent('game-list', {
     });
 
     sceneEl.appendChild(assetsEl);
-    this.createBackButton();
   },
 
   createBackButton() {
