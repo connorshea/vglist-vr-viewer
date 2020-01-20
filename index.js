@@ -59,6 +59,11 @@ AFRAME.registerComponent('vglist-vr-viewer', {
     assetsEl.appendChild(noCoverImg);
 
     gamePurchases['nodes'].forEach((gamePurchase, i) => {
+      // TODO: Remove this limitation.
+      if (i > 10) {
+        return;
+      }
+
       let img = document.createElement('img');
       let assetName = '';
       if (gamePurchase['game']['coverUrl'] === null) {
@@ -69,11 +74,6 @@ AFRAME.registerComponent('vglist-vr-viewer', {
         assetName = `img${i}`;
         img.setAttribute('id', assetName);
         assetsEl.appendChild(img);
-      }
-
-      // TODO: Remove this limitation.
-      if (i > 10) {
-        return;
       }
 
       let gameBox = document.createElement('a-entity');
