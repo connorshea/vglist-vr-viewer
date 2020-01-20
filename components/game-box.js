@@ -1,6 +1,6 @@
 /* global AFRAME */
 
-import { GAME_BOX } from './constants.js';
+import { GAME_BOX } from '../constants.js';
 
 if (typeof AFRAME === 'undefined') {
   throw new Error('Component attempted to register before AFRAME was available.');

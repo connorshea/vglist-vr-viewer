@@ -17,10 +17,10 @@ module.exports = {
   },
   entry: {
     'vglist-vr-viewer': './index.js',
-    'game-box': './game-box.js',
-    'avatar-box': './avatar-box.js',
-    'user-list': './user-list.js',
-    'game-list': './game-list.js',
+    'game-box': './components/game-box.js',
+    'avatar-box': './components/avatar-box.js',
+    'user-list': './components/user-list.js',
+    'game-list': './components/game-list.js',
     'environment': './environment.js',
     'aframe': './aframe.js'
   },
