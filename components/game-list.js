@@ -32,13 +32,13 @@ AFRAME.registerComponent('game-list', {
     let libraryTextEl = document.createElement('a-entity');
     libraryTextEl.setAttribute('text', `color: black; width: 5; wrap-count: 15; align: center; side: double; value: ${this.data.username}'s Library`);
     libraryTextEl.setAttribute('position', { x: 0.5, y: GAME_BOX.height + 2, z: GAME_BOX.z_position });
-    sceneEl.appendChild(libraryTextEl);
+    this.el.appendChild(libraryTextEl);
 
     if (gamePurchases['nodes'].length === 0) {
       let noGamesTextEl = document.createElement('a-entity');
       noGamesTextEl.setAttribute('text', `color: black; width: 10; wrap-count: 30; align: center; side: double; value: This user has no games.`);
       noGamesTextEl.setAttribute('position', { x: 0.5, y: GAME_BOX.height - 1, z: GAME_BOX.z_position });
-      sceneEl.appendChild(noGamesTextEl);
+      this.el.appendChild(noGamesTextEl);
       return;
     }
 
@@ -63,7 +63,7 @@ AFRAME.registerComponent('game-list', {
       } else {
         img.setAttribute('src', `${VGLIST_URL}${gamePurchase['game']['coverUrl']}`);
         img.setAttribute('crossorigin', 'anonymous');
-        assetName = `img${i}`;
+        assetName = `img-${this.data.username}-${i}`;
         img.setAttribute('id', assetName);
         assetsEl.appendChild(img);
       }
@@ -76,6 +76,13 @@ AFRAME.registerComponent('game-list', {
     });
 
     sceneEl.appendChild(assetsEl);
+    this.createBackButton();
+  },
+
+  createBackButton() {
+    let backButton = document.createElement('a-entity');
+    backButton.setAttribute('back-button', '');
+    this.el.appendChild(backButton);
   },
 
   async getGamePurchases(username) {

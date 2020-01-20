@@ -21,6 +21,7 @@ module.exports = {
     'avatar-box': './components/avatar-box.js',
     'user-list': './components/user-list.js',
     'game-list': './components/game-list.js',
+    'back-button': './components/back-button.js',
     'environment': './environment.js',
     'aframe': './aframe.js'
   },

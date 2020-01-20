@@ -55,7 +55,6 @@ AFRAME.registerComponent('avatar-box', {
       y: (this.data.yRow * (AVATAR_BOX.height + 0.3)) + AVATAR_BOX.height + 0.3,
       z: AVATAR_BOX.z_position
     });
-    textEl.setAttribute('rotation', { x: 0, y: 0, z: 0 });
     this.el.appendChild(textEl);
   },
 
@@ -94,8 +93,6 @@ AFRAME.registerComponent('avatar-box', {
   events: {
     // When clicking a user, it'll load their library and remove the user list selection screen.
     click: function (event) {
-      console.log(event);
-      console.log(event.target);
       let username = event.target.dataset.username;
       let sceneEl = document.querySelector('a-scene');
 
