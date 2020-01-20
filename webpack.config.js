@@ -18,6 +18,7 @@ module.exports = {
   entry: {
     'vglist-vr-viewer': './index.js',
     'game-box': './game-box.js',
+    'avatar-box': './avatar-box.js',
     'environment': './environment.js',
     'aframe': './aframe.js'
   },

@@ -153,32 +153,9 @@ AFRAME.registerComponent('vglist-vr-viewer', {
           assetsEl.appendChild(img);
         }
 
-        let userEl = document.createElement('a-box');
-        // Do `.setAttribute()`s to initialize the entity.
-        userEl.setAttribute('src', `#${assetName}`);
-        userEl.setAttribute('geometry', {
-          primitive: 'box',
-          height: AVATAR_BOX.height,
-          width: AVATAR_BOX.width,
-          depth: AVATAR_BOX.depth
-        });
-        userEl.setAttribute('position', {
-          x: avatarXPosition,
-          y: (avatarYRow * (AVATAR_BOX.height + 0.3)) + AVATAR_BOX.height / 2 + 0.25,
-          z: AVATAR_BOX.z_position
-        });
-        userEl.classList.add('clickable');
-        sceneEl.appendChild(userEl);
-
-        let textEl = document.createElement('a-entity');
-        textEl.setAttribute('text', `color: black; width: ${AVATAR_BOX.width}; wrap-count: 15; baseline: bottom; align: center; side: double; value: ${user['username']}`);
-        textEl.setAttribute('position', {
-          x: avatarXPosition,
-          y: (avatarYRow * (AVATAR_BOX.height + 0.3)) + AVATAR_BOX.height + 0.3,
-          z: AVATAR_BOX.z_position
-        });
-        textEl.setAttribute('rotation', { x: 0, y: 180, z: 0 });
-        sceneEl.appendChild(textEl);
+        let userBox = document.createElement('a-entity');
+        userBox.setAttribute('avatar-box', `username: ${user['username']}; avatarId: ${assetName}; xPosition: ${avatarXPosition}; yRow: ${avatarYRow}`);
+        sceneEl.appendChild(userBox);
 
         avatarXPosition += AVATAR_BOX.width + AVATAR_BOX.margin;
       });
