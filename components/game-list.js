@@ -53,11 +53,6 @@ AFRAME.registerComponent('game-list', {
     assetsEl.appendChild(noCoverImg);
 
     gamePurchases['nodes'].forEach((gamePurchase, i) => {
-      // TODO: Remove this limitation.
-      if (i > 10) {
-        return;
-      }
-
       let img = document.createElement('img');
       let assetName = '';
       if (gamePurchase['game']['coverUrl'] === null) {
@@ -97,7 +92,7 @@ AFRAME.registerComponent('game-list', {
     const query = /* GraphQL */ `
       query($cursor: String!) {
         user(username: "${username}") {
-          gamePurchases(after: $cursor) {
+          gamePurchases(after: $cursor, first: 10) {
             nodes {
               game {
                 name
