@@ -4,7 +4,7 @@ if (typeof AFRAME === 'undefined') {
   throw new Error('Component attempted to register before AFRAME was available.');
 }
 
-AVATAR_BOX = {
+const AVATAR_BOX = {
   height: 1.5,
   width: 1.5,
   depth: 0.1,
