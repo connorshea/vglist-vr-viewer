@@ -37,7 +37,7 @@ AFRAME.registerComponent('user-list', {
 
     let avatarYRow = 0;
     userChunks.forEach((userChunk, i) => {
-      let avatarXPosition = -10;
+      let avatarXPosition = -5;
 
       userChunk.forEach((user, j) => {
         let img = document.createElement('img');
@@ -54,7 +54,7 @@ AFRAME.registerComponent('user-list', {
 
         let userBox = document.createElement('a-entity');
         userBox.setAttribute('avatar-box', `username: ${user['username']}; avatarId: ${assetName}; xPosition: ${avatarXPosition}; yRow: ${avatarYRow}`);
-        sceneEl.appendChild(userBox);
+        this.el.appendChild(userBox);
 
         avatarXPosition += AVATAR_BOX.width + AVATAR_BOX.margin;
       });

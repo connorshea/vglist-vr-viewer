@@ -21,10 +21,6 @@ AFRAME.registerComponent('vglist-vr-viewer', {
   init: async function() {
     let sceneEl = document.querySelector('a-scene');
 
-    let gameList = document.createElement('a-entity');
-    gameList.setAttribute('game-list', 'username: connor;');
-    sceneEl.appendChild(gameList);
-
     let userList = document.createElement('a-entity');
     userList.setAttribute('user-list', '');
     sceneEl.appendChild(userList);

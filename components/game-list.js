@@ -34,6 +34,14 @@ AFRAME.registerComponent('game-list', {
     libraryTextEl.setAttribute('position', { x: 0.5, y: GAME_BOX.height + 2, z: GAME_BOX.z_position });
     sceneEl.appendChild(libraryTextEl);
 
+    if (gamePurchases['nodes'].length === 0) {
+      let noGamesTextEl = document.createElement('a-entity');
+      noGamesTextEl.setAttribute('text', `color: black; width: 10; wrap-count: 30; align: center; side: double; value: This user has no games.`);
+      noGamesTextEl.setAttribute('position', { x: 0.5, y: GAME_BOX.height - 1, z: GAME_BOX.z_position });
+      sceneEl.appendChild(noGamesTextEl);
+      return;
+    }
+
     let xPosition = -10;
 
     // Create no-cover asset so it can be reused.
@@ -62,7 +70,7 @@ AFRAME.registerComponent('game-list', {
 
       let gameBox = document.createElement('a-entity');
       gameBox.setAttribute('game-box', `gameName: ${gamePurchase['game']['name']}; gameCoverId: ${assetName}; xPosition: ${xPosition}`);
-      sceneEl.appendChild(gameBox);
+      this.el.appendChild(gameBox);
 
       xPosition += GAME_BOX.width + GAME_BOX.margin;
     });

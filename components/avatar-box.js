@@ -26,6 +26,7 @@ AFRAME.registerComponent('avatar-box', {
    * Called once when component is attached. Generally for initial setup.
    */
   init: function() {
+    this.el.setAttribute('data-username', this.data.username);
     let boxEl = document.createElement('a-box');
 
     boxEl.setAttribute('src', `#${this.data.avatarId}`);
@@ -35,7 +36,6 @@ AFRAME.registerComponent('avatar-box', {
       width: AVATAR_BOX.width,
       depth: AVATAR_BOX.depth
     });
-    boxEl.setAttribute('data-username', this.data.username);
     boxEl.setAttribute('position', {
       x: this.data.xPosition,
       y: (this.data.yRow * (AVATAR_BOX.height + 0.3)) + AVATAR_BOX.height / 2 + 0.25,
@@ -55,7 +55,7 @@ AFRAME.registerComponent('avatar-box', {
       y: (this.data.yRow * (AVATAR_BOX.height + 0.3)) + AVATAR_BOX.height + 0.3,
       z: AVATAR_BOX.z_position
     });
-    textEl.setAttribute('rotation', { x: 0, y: 180, z: 0 });
+    textEl.setAttribute('rotation', { x: 0, y: 0, z: 0 });
     this.el.appendChild(textEl);
   },
 
@@ -92,9 +92,17 @@ AFRAME.registerComponent('avatar-box', {
    * Event handlers that automatically get attached or detached based on scene state.
    */
   events: {
+    // When clicking a user, it'll load their library and remove the user list selection screen.
     click: function (event) {
-      console.log(event);
-      console.log(event.target.dataset.username);
+      let username = event.target.dataset.username;
+      let sceneEl = document.querySelector('a-scene');
+
+      let gameList = document.createElement('a-entity');
+      gameList.setAttribute('game-list', `username: ${username};`);
+
+      let userList = document.querySelector('a-entity[user-list]');
+      sceneEl.appendChild(gameList);
+      userList.remove();
     }
   },
 });

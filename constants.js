@@ -6,7 +6,7 @@ const GAME_BOX = {
   depth: 0.1,
   margin: 0.3,
   height_off_ground: 0.75,
-  z_position: -4
+  z_position: -6
 };
 
 const AVATAR_BOX = {
@@ -14,7 +14,7 @@ const AVATAR_BOX = {
   width: 1.5,
   depth: 0.1,
   margin: 0.2,
-  z_position: 4
+  z_position: -6
 };
 
 export { VGLIST_URL, GAME_BOX, AVATAR_BOX };
