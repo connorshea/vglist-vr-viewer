@@ -29,7 +29,7 @@ AFRAME.registerComponent('user-list', {
 
     // Create default-avatar asset so it can be reused.
     let defaultAvatarImg = document.createElement('img');
-    defaultAvatarImg.setAttribute('src', `./default-avatar.png`);
+    defaultAvatarImg.setAttribute('src', `./images/default-avatar.png`);
     defaultAvatarImg.setAttribute('id', 'defaultAvatar');
     assetsEl.appendChild(defaultAvatarImg);
 

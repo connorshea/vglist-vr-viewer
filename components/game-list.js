@@ -48,7 +48,7 @@ AFRAME.registerComponent('game-list', {
 
     // Create no-cover asset so it can be reused.
     let noCoverImg = document.createElement('img');
-    noCoverImg.setAttribute('src', `./no-cover.png`);
+    noCoverImg.setAttribute('src', `./images/no-cover.png`);
     noCoverImg.setAttribute('id', 'noCover');
     assetsEl.appendChild(noCoverImg);
 
