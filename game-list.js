@@ -1,21 +1,11 @@
 /* global AFRAME */
 
 import { Utils } from './utils.js'
+import { VGLIST_URL, GAME_BOX } from './constants.js';
 
 if (typeof AFRAME === 'undefined') {
   throw new Error('Component attempted to register before AFRAME was available.');
 }
-
-const VGLIST_URL = "https://vglist.co";
-
-const GAME_BOX = {
-  height: 2.5,
-  width: 1.5,
-  depth: 0.1,
-  margin: 0.3,
-  height_off_ground: 0.75,
-  z_position: -4
-};
 
 /**
  * Game list component

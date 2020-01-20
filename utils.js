@@ -1,4 +1,4 @@
-const VGLIST_URL = "https://vglist.co";
+import { VGLIST_URL } from './constants.js';
 
 class Utils {
   /**
