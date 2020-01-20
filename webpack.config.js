@@ -20,6 +20,7 @@ module.exports = {
     'game-box': './game-box.js',
     'avatar-box': './avatar-box.js',
     'user-list': './user-list.js',
+    'game-list': './game-list.js',
     'environment': './environment.js',
     'aframe': './aframe.js'
   },

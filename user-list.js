@@ -123,10 +123,5 @@ AFRAME.registerComponent('user-list', {
   /**
    * Event handlers that automatically get attached or detached based on scene state.
    */
-  events: {
-    click: function (event) {
-      console.log(event);
-      console.log(event.target.dataset.username);
-    }
-  },
+  events: { },
 });
