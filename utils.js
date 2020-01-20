@@ -3,9 +3,11 @@ import { VGLIST_URL } from './constants.js';
 class Utils {
   /**
    * Executes a GraphQL query.
-   * @param {string} query 
+   *
+   * @param {string} query
+   * @param {Object} variables
    */
-  static async graphqlQuery(query) {
+  static async graphqlQuery(query, variables = {}) {
     let email = VGLIST_USER_EMAIL;
     let token = VGLIST_API_TOKEN;
     let endpoint = `${VGLIST_URL}/graphql`;
@@ -19,7 +21,7 @@ class Utils {
         'Content-Type': 'application/json',
         "Accept": "*/*"
       },
-      body: JSON.stringify({ query: query })
+      body: JSON.stringify({ query: query, variables: variables })
     }).then(response => response.json())
       .then(data => {
         return data;

@@ -64,21 +64,26 @@ AFRAME.registerComponent('user-list', {
     sceneEl.appendChild(assetsEl);
   },
 
-  async getUsers() {
-    const query = /* GraphQL */ `{
-      users {
-        nodes {
-          username
-          avatarUrl
-        }
-        pageInfo {
-          hasNextPage
-          endCursor
+  async getUsers(cursor = "") {
+    const query = /* GraphQL */ `
+      query($cursor: String!) {
+        users(after: $cursor) {
+          nodes {
+            username
+            avatarUrl
+          }
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+            pageSize
+          }
         }
       }
-    }`;
-  
-    let result = await Utils.graphqlQuery(query);
+    `;
+
+    let result = await Utils.graphqlQuery(query, { "cursor": cursor });
     return result['data']['users'];
   },
 

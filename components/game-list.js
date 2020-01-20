@@ -80,31 +80,43 @@ AFRAME.registerComponent('game-list', {
     sceneEl.appendChild(assetsEl);
   },
 
+  /**
+   * Creates a back button in the game list view.
+   */
   createBackButton() {
     let backButton = document.createElement('a-entity');
     backButton.setAttribute('back-button', '');
     this.el.appendChild(backButton);
   },
 
-  async getGamePurchases(username) {
-    const query = /* GraphQL */ `{
-      user(username: "${username}") {
-        gamePurchases {
-          nodes {
-            game {
-              name
-              coverUrl
+  /**
+   * @param {string} username The username of the suer to get game purchases for.
+   * @param {string} cursor The start of the page.
+   */
+  async getGamePurchases(username, cursor = "") {
+    const query = /* GraphQL */ `
+      query($cursor: String!) {
+        user(username: "${username}") {
+          gamePurchases(after: $cursor) {
+            nodes {
+              game {
+                name
+                coverUrl
+              }
             }
-          }
-          pageInfo {
-            hasNextPage
-            endCursor
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+              startCursor
+              endCursor
+              pageSize
+            }
           }
         }
       }
-    }`;
+    `;
 
-    let result = await Utils.graphqlQuery(query);
+    let result = await Utils.graphqlQuery(query, { "cursor": cursor });
     return result['data']['user']['gamePurchases'];
   },
 
