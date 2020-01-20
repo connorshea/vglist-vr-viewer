@@ -1,5 +1,7 @@
 /* global AFRAME */
 
+import { Utils } from './utils.js'
+
 if (typeof AFRAME === 'undefined') {
   throw new Error('Component attempted to register before AFRAME was available.');
 }
@@ -85,7 +87,7 @@ AFRAME.registerComponent('user-list', {
       }
     }`;
   
-    result = await graphqlQuery(query);
+    let result = await Utils.graphqlQuery(query);
     return result['data']['users'];
   },
 
@@ -128,61 +130,3 @@ AFRAME.registerComponent('user-list', {
     }
   },
 });
-
-async function getUsers() {
-  const query = /* GraphQL */ `{
-    users {
-      nodes {
-        username
-        avatarUrl
-      }
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-    }
-  }`;
-
-  result = await graphqlQuery(query);
-  return result['data']['users'];
-}
-
-async function graphqlQuery(query) {
-  let email = VGLIST_USER_EMAIL;
-  let token = VGLIST_API_TOKEN;
-  let endpoint = `${VGLIST_URL}/graphql`;
-
-  return await fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      "User-Agent": "Stupid vglist VR Viewer",
-      "X-User-Email": email,
-      "X-User-Token": token,
-      'Content-Type': 'application/json',
-      "Accept": "*/*"
-    },
-    body: JSON.stringify({ query: query })
-  }).then(response => response.json())
-    .then(data => {
-      return data;
-    });
-}
-
-class Utils {
-  /**
-   * Breaks an array up into chunks of a specific size.
-   *
-   * @param {array} array The array to chunk.
-   * @param {number} size The length of each chunk.
-   * @return {array[]} An array of arrays, each up to size in length.
-   */
-  static chunk(array, size) {
-    const chunked_arr = [];
-    let index = 0;
-    while (index < array.length) {
-      chunked_arr.push(array.slice(index, size + index));
-      index += size;
-    }
-    return chunked_arr;
-  }
-}

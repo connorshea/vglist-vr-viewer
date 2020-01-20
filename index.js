@@ -1,11 +1,12 @@
 /* global AFRAME */
 
+import { Utils } from './utils.js';
+
 if (typeof AFRAME === 'undefined') {
   throw new Error('Component attempted to register before AFRAME was available.');
 }
 
 const VGLIST_URL = "https://vglist.co";
-// const VGLIST_URL = "http://localhost:3000";
 
 const GAME_BOX = {
   height: 2.5,
@@ -136,27 +137,6 @@ async function getGamePurchases(username) {
     }
   }`;
 
-  result = await graphqlQuery(query);
+  let result = await Utils.graphqlQuery(query);
   return result['data']['user']['gamePurchases'];
-}
-
-async function graphqlQuery(query) {
-  let email = VGLIST_USER_EMAIL;
-  let token = VGLIST_API_TOKEN;
-  let endpoint = `${VGLIST_URL}/graphql`;
-
-  return await fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      "User-Agent": "Stupid vglist VR Viewer",
-      "X-User-Email": email,
-      "X-User-Token": token,
-      'Content-Type': 'application/json',
-      "Accept": "*/*"
-    },
-    body: JSON.stringify({ query: query })
-  }).then(response => response.json())
-    .then(data => {
-      return data;
-    });
 }
