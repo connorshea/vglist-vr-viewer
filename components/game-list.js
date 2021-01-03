@@ -58,7 +58,7 @@ AFRAME.registerComponent('game-list', {
       if (gamePurchase['game']['coverUrl'] === null) {
         assetName = 'noCover';
       } else {
-        img.setAttribute('src', `${VGLIST_URL}${gamePurchase['game']['coverUrl']}`);
+        img.setAttribute('src', gamePurchase['game']['coverUrl']);
         img.setAttribute('crossorigin', 'anonymous');
         assetName = `img-${this.data.username}-${i}`;
         img.setAttribute('id', assetName);
@@ -96,7 +96,7 @@ AFRAME.registerComponent('game-list', {
             nodes {
               game {
                 name
-                coverUrl
+                coverUrl(size: LARGE)
               }
             }
             pageInfo {
