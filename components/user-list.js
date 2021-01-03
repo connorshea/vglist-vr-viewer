@@ -45,7 +45,7 @@ AFRAME.registerComponent('user-list', {
         if (user['avatarUrl'] === null) {
           assetName = 'defaultAvatar';
         } else {
-          img.setAttribute('src', `${VGLIST_URL}${user['avatarUrl']}`);
+          img.setAttribute('src', user['avatarUrl']);
           img.setAttribute('crossorigin', 'anonymous');
           assetName = `userImg${i}${j}`;
           img.setAttribute('id', assetName);
@@ -70,7 +70,7 @@ AFRAME.registerComponent('user-list', {
         users(after: $cursor) {
           nodes {
             username
-            avatarUrl
+            avatarUrl(size: LARGE)
           }
           pageInfo {
             hasNextPage
